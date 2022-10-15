@@ -1,4 +1,3 @@
-## Preguntas
+# Preguntas
 
-- Como hacer trayectorias sin que se solapen?
-
+- ¿Cómo hacer trayectorias sin que se solapen?

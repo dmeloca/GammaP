@@ -1,7 +1,6 @@
 from typing import List
 from pprint import pprint
 
-
 def grap_generate( plane:List[list],limit: int ) -> List[list] :
     '''
     Graph generated from trajectories I, II, III.
@@ -64,46 +63,63 @@ fig = go.Figure()
 fig.add_trace(go.Scatter(
     x=x,
     y=[0, 0, 1, 3 ],
-    name = 'Gaps', 
-    connectgaps=True 
+    name = 'Type I', 
+    legendgroup='Type I',
+    marker=dict(color='red'),
 ))
 
 
 fig.add_trace(go.Scatter(
     x=x,
     y=[None, 0, 0, 1, 3],
-    name='Gaps',
+    name = 'Type II', 
+    legendgroup='Type II',
+    marker=dict(color='blue'),
 ))
 
 fig.add_trace(go.Scatter(
     x=x,
     y=[None, None, 1, 1, 2],
-    name='Gaps',
+    name = 'Type II', 
+    legendgroup='Type II',
+    marker=dict(color='blue'),
+    showlegend=False,
 ))
 
 
 fig.add_trace(go.Scatter(
     x =x,
     y =[None, None, None, 3, 3],
-    name='Gaps',
+    name = 'Type II', 
+    legendgroup='Type II',
+    marker=dict(color='blue'),
+    showlegend=False,
 ))
 
 fig.add_trace(go.Scatter(
     x =x,
     y =[None, None, 0, 0],
-    name='Gaps',
+    name = 'Type III', 
+    legendgroup='Type III',
+    marker=dict(color='green'),
 ))
 
 fig.add_trace(go.Scatter(
     x =x,
     y =[None, None, None, 1, 1, 2],
-    name='Gaps',
+    name = 'Type III', 
+    legendgroup='Type III',
+    marker=dict(color='green'),
+    showlegend=False,
 ))
 
 fig.add_trace(go.Scatter(
     x =x,
     y =[None, None, None, None, 2, 2],
-    name='Gaps',
+    name = 'Type III', 
+    legendgroup='Type III',
+    marker=dict(color='green'),
+    showlegend=False,
 ))
 
 
