@@ -55,16 +55,58 @@ def m_g(c: int, r: int)-> List[list]:
 import plotly.express as px
 import pandas as pd
 
-df = pd.DataFrame(dict(
-    Trayectoria = ["Tipo I","Tipo I","Tipo I","Tipo I", "Tipo II", "Tipo II", "Tipo II", "Tipo II"],
-    x = [0,1,2,3, 1, 2, 3, 4  ],
-    y = [0,0,1,3, 0, 0, 1, 3]
+import plotly.graph_objects as go
+
+x = [0,1, 2, 3, 4, 5]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=x,
+    y=[0, 0, 1, 3 ],
+    name = 'Gaps', 
+    connectgaps=True 
 ))
 
-# Como hacer para que 
-df = df.sort_values(by="x")
 
-fig = px.line(df, x="x", y="y", color="Trayectoria", symbol="Trayectoria")
+fig.add_trace(go.Scatter(
+    x=x,
+    y=[None, 0, 0, 1, 3],
+    name='Gaps',
+))
+
+fig.add_trace(go.Scatter(
+    x=x,
+    y=[None, None, 1, 1, 2],
+    name='Gaps',
+))
+
+
+fig.add_trace(go.Scatter(
+    x =x,
+    y =[None, None, None, 3, 3],
+    name='Gaps',
+))
+
+fig.add_trace(go.Scatter(
+    x =x,
+    y =[None, None, 0, 0],
+    name='Gaps',
+))
+
+fig.add_trace(go.Scatter(
+    x =x,
+    y =[None, None, None, 1, 1, 2],
+    name='Gaps',
+))
+
+fig.add_trace(go.Scatter(
+    x =x,
+    y =[None, None, None, None, 2, 2],
+    name='Gaps',
+))
+
+
 fig.show()
 
 
