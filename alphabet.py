@@ -1,5 +1,3 @@
-
-from calendar import c
 import plotly.graph_objects as go
 
 def alphabet_plane(text:list[str]):
@@ -16,7 +14,7 @@ def alphabet_plane(text:list[str]):
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9], #10
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9], #9
         
 
     y = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     #0, y axis 0-9
@@ -36,14 +34,24 @@ def alphabet_plane(text:list[str]):
     fig.show()
 
 
-def column_shift(p: str, matrix: list[str]) -> list[str]:
-    m_c= list(matrix)
-    column = len(p)  
-    for i in range(len(p)): 
-        for x in range(len(p)):  m_c[int(p[i])+column*x]= matrix[int(p[(i+1)%len(p)])+column*x]
+def permutation_columns(p: str, matrix: list[str]) -> list[str]:
+    """
+    Column permutation, enter a permutation of the form "1235.. " and the matrix to be permuted
+    """
+    m_c= list(matrix) #copy
+    selector = len(p) #jump to the other element in the column so that x iterates over it
+    for i in range(len(p)): #choose the column
+        for x in range(len(p)): #iterate through the elements of the column
+            m_c[int(p[i])+selector*x]= matrix[int(p[(i+1)%len(p)])+selector*x] #change
     return m_c        
 
 """
+int(p[i]) := elige la columna
+se
+
+m_c[int(p[i])+column*x]= matrix[int(p[(i+1)%len(p)])+column*x]
+
+
 ['a','b','c',
 'b', 'c','d',
 'c','d','e']
@@ -83,7 +91,7 @@ if __name__ == "__main__":
     
     p="0246813579"
 
-    text = column_shift(p,text)
+    text = permutation_columns(p,text)
     #print(text)
     alphabet_plane(text)
 
