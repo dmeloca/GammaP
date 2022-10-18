@@ -46,11 +46,7 @@ def permutation_columns(p: str, matrix: list[str]) -> list[str]:
     return m_c        
 
 """
-int(p[i]) := elige la columna
-se
-
-m_c[int(p[i])+column*x]= matrix[int(p[(i+1)%len(p)])+column*x]
-
+Ejemplo
 
 ['a','b','c',
 'b', 'c','d',
@@ -61,8 +57,6 @@ m_c[int(p[i])+column*x]= matrix[int(p[(i+1)%len(p)])+column*x]
 'd', 'e', 'c']
 """
         
-
-
 
 
 
