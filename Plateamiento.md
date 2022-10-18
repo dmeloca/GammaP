@@ -1,4 +1,5 @@
 # Preguntas
 
-- Como se pueden encontrar los puntos para las trayectorias tipo 3
-- Como guarda la imagen que genera el plot para mandarla por flask
+- Como guarda la imagen que genera el plot para mandarla por flask: https://dash.plotly.com/sharing-data-between-callbacks
+
+-shift para cada letra vector
