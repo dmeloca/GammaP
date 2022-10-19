@@ -61,7 +61,9 @@ def alphabets(x_0:int, y_0:int, permutation:str) -> tuple[go.Figure, list[list]]
     '''
     fig = go.Figure()
     p = [ord(i)-48 for i in permutation]
-    fig.update_yaxes(scaleanchor = 'x', scaleratio = 1) #Same scale for x and y axes
+    #fig.update_yaxes(scaleanchor = 'x', scaleratio = 1) #Same scale for x and y axes
+    #fig.update_yaxes(automargin= "height"  )
+    fig.update_yaxes(autotypenumbers="strict")
     #matrix with 10 columns of alphabets with a shift
     alphabets = [[chr(((i+j) % 26) + 97) for i in range(20)] for j in range(10)]
     #permutation of the columns of the previous matrix
@@ -80,8 +82,8 @@ def alphabets(x_0:int, y_0:int, permutation:str) -> tuple[go.Figure, list[list]]
                 y = list(range(20)),
                 mode = "markers+text",
                 text = k[c],
-                textposition = "bottom center",
-                marker = dict(color='black'),
+                textposition = "middle center",
+                marker = dict(color='white'),
                 showlegend = False,
             )
         )
@@ -104,6 +106,6 @@ def decrypt_gammaP(cipher_text:str, k:list[list]) -> str:
 
 
 if __name__ == "__main__":
-    fig, k = alphabets(-5, -3, '0235814697')
+    fig, k = alphabets(-5, -1, '0235814697')
     fig.show()
     print(k)
