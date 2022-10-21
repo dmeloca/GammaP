@@ -1,5 +1,6 @@
-from pprint import pprint
+
 import plotly.graph_objects as go
+from string import ascii_lowercase
 
 TYPE = ["Type I", "Type II", "Type III"]
 COLORS = ["red", "green", "blue"]
@@ -55,21 +56,20 @@ def graphGenerator(x_0:int, y_0:int, fig:go.Figure) -> list[int]:
     trajectory(t2, 2, fig, classes) #Trajectories Type III
     return classes
 
-def alphabets(x_0:int, y_0:int, permutation:str) -> tuple[go.Figure, list[list]]:
+def graphing(x_0:int, y_0:int, permutation:str) -> tuple[go.Figure, list[list]]:
     '''
     Returns the figure and the matrix of permuted alphabets
     '''
     fig = go.Figure()
     p = [ord(i)-48 for i in permutation]
-    #fig.update_yaxes(scaleanchor = 'x', scaleratio = 1) #Same scale for x and y axes
-    #fig.update_yaxes(automargin= "height"  )
     fig.update_yaxes(autotypenumbers="strict")
+
     #matrix with 10 columns of alphabets with a shift
     alphabets = [[chr(((i+j) % 26) + 97) for i in range(20)] for j in range(10)]
     #permutation of the columns of the previous matrix
     k = [alphabets[p[i]] for i in range(10)]
     #number of trajectories thar cross points of each class
-    classes = graphGenerator(x_0, y_0, fig)
+    classes: list[int] = graphGenerator(x_0, y_0, fig)
     #adds the number of trajectories to every position in the matrix
     for i in range(10):
         for j in range(20):
@@ -89,23 +89,44 @@ def alphabets(x_0:int, y_0:int, permutation:str) -> tuple[go.Figure, list[list]]
         )
     return fig, k
 
-from string import ascii_lowercase
 
-# char to int
-char2int = {x: idx for idx, x in enumerate(ascii_lowercase)}
-# int to char
-int2char = {idx: x for idx, x in enumerate(ascii_lowercase)}
+def encrypt_gammaP(plain_text:str, matrix:list[list[int]]) -> list[tuple[int,int]]:
+    """
+    Cipher text in coordinates of the coding in the plane
+    """
+    encrypt = list()
+    plain_text = plain_text.replace(" ", "").lower() #remove spaces
+    percentage, initial = 0, 0
+    
+    for i in plain_text: 
+        for j in range(len(matrix)): #(j+initial) %len(matrix) = column
+            if i in matrix[(j+initial) %len(matrix)]:
+                encrypt.append( ((j+initial)%len(matrix) ,matrix[(j+initial) %len(matrix)].index(i)) ) #(column, row)
+                percentage +=1 # ciphertext percentage
+                break
+        initial +=1
+    return encrypt ,(percentage*100)/len(plain_text)
 
-def encrypt_gammaP(plain_text:str, k:list[list]) -> str:
-    plain_text = plain_text.replace(" ", "").lower()
-    return "".join([int2char[(char2int[i] + k) % 26] for i in plain_text]).upper()
-
-def decrypt_gammaP(cipher_text:str, k:list[list]) -> str:
-    cipher_text = cipher_text.replace(" ", "").lower()
-    return "".join([int2char[(char2int[i] - k) % 26] for i in cipher_text])
-
+def decrypt_gammaP(cipher_text:list[tuple[int]], matrix:list[list[int]]) -> str:
+    """
+    Plaintext encrypted in plane coordinates
+    """
+    decrypt:str = ""
+    for i in cipher_text:
+        decrypt += matrix[i[0]][i[1]]
+    return decrypt
 
 if __name__ == "__main__":
-    fig, k = alphabets(-5, -1, '0235814697')
-    fig.show()
-    print(k)
+    fig, matrix = graphing(0, 0, '0235814697')
+    #fig.show()
+    #print(matrix)
+
+    #test encrypt
+    print(encrypt_gammaP("abcd", matrix))
+    #print(encrypt_gammaP("Inceptos neque.", matrix))
+
+    #test decrypt
+    print(decrypt_gammaP([(0, 0), (4, 13), (2, 17), (3, 16)], matrix))
+    print(decrypt_gammaP([(0, 6), (1, 6), (2, 17), (3, 19), (5, 10), (5, 12), (7, 3), (7, 8), (8, 1), (1, 1), (1, 9), (1, 14), (2, 0)], matrix))
+    
+
